@@ -4,12 +4,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
 class Gallow {
-    private static final Random random = new Random();
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Random RANDOM = new Random();
+    private static final Scanner SCANNER = new Scanner(System.in);
     private static final ArrayList<String> WORDS = new ArrayList<>();
     private static String CHOSEN_WORD;
     private static int ATTEMPTS = 6;
@@ -17,6 +18,8 @@ class Gallow {
     private static final String CHOSEN_CORRECT_LETTER = "выбрана правильная буква";
     private static final String CHOSEN_INCORRECT_LETTER = "выбрана неправильная буква";
     private static char[] maskedWord;
+    private static char GUESSLETTER;
+    private static final HashSet<Character> guessedLetters = new HashSet<>(); // Для хранения угаданных букв
 
     public static void main(String[] args) {
         loadWords();
@@ -33,7 +36,7 @@ class Gallow {
         }
 
         if (ATTEMPTS == 0) {
-            System.out.println(GAME_IS_OVER + "загаднное слово было: "+ CHOSEN_WORD);
+            System.out.println(GAME_IS_OVER + ". Загаданное слово было: " + CHOSEN_WORD);
         }
     }
 
@@ -50,7 +53,7 @@ class Gallow {
     }
 
     public static void chooseRandomWord() {
-        int randomIndex = random.nextInt(WORDS.size());
+        int randomIndex = RANDOM.nextInt(WORDS.size());
         CHOSEN_WORD = WORDS.get(randomIndex);
         maskedWord = new char[CHOSEN_WORD.length()];
         Arrays.fill(maskedWord, '*');
@@ -58,17 +61,23 @@ class Gallow {
     }
 
     public static void createMask() {
-        System.out.println(maskedWord);
+        System.out.print("Текущее состояние слова: ");
+        for (int i = 0; i < maskedWord.length; i++) {
+            System.out.print(maskedWord[i]);
+        }
+        System.out.println();
+        System.out.print("Угаданные буквы: " + guessedLetters + "\n");
     }
 
     public static void playerGuess() {
         System.out.print("Введите букву: ");
-        char guessLetter = scanner.next().charAt(0);
+        GUESSLETTER = SCANNER.next().charAt(0);
+        guessedLetters.add(GUESSLETTER); // Добавляем угаданную букву в коллекцию
         boolean correctGuess = false;
 
         for (int i = 0; i < CHOSEN_WORD.length(); i++) {
-            if (CHOSEN_WORD.charAt(i) == guessLetter) {
-                maskedWord[i] = guessLetter;
+            if (CHOSEN_WORD.charAt(i) == GUESSLETTER) {
+                maskedWord[i] = GUESSLETTER;
                 correctGuess = true;
             }
         }
