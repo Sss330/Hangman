@@ -57,7 +57,7 @@ class Gallow {
         CHOSEN_WORD = WORDS.get(randomIndex);
         maskedWord = new char[CHOSEN_WORD.length()];
         Arrays.fill(maskedWord, '*');
-        System.out.println("Случайное слово выбрано: " + CHOSEN_WORD); // Для отладки
+        System.out.println("Случайное слово выбрано: " + CHOSEN_WORD); 
     }
 
     public static void createMask() {
@@ -72,7 +72,7 @@ class Gallow {
     public static void playerGuess() {
         System.out.print("Введите букву: ");
         GUESSLETTER = SCANNER.next().charAt(0);
-        guessedLetters.add(GUESSLETTER); // Добавляем угаданную букву в коллекцию
+        guessedLetters.add(GUESSLETTER); 
         boolean correctGuess = false;
 
         for (int i = 0; i < CHOSEN_WORD.length(); i++) {
